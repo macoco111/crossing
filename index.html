@@ -12,12 +12,12 @@
         }
         body {
             display: flex;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
+            align-items: flex-start;
+            justify-content: center;
             font-family: Arial, sans-serif;
             background: url('webpage_background.jpg') no-repeat center center/cover; /* Replace with your background image */
             overflow: hidden;
+            height: 100vh;
         }
         #logo {
             margin-top: 20px;
@@ -40,7 +40,7 @@
             background: url('road_background.jpg') no-repeat center center/cover; /* Replace with your road background image */
             overflow: hidden;
             border: 2px solid #fff;
-            margin-top: 10px;
+            margin-top: 20px;
         }
         #animal {
             position: absolute;
@@ -65,27 +65,30 @@
             background-color: transparent;
             border-bottom: 1px dashed #fff;
         }
+        /* Sidebar styling */
+        #instructions {
+            width: 300px;
+            padding: 20px;
+            margin-left: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.5;
+            position: relative;
+            top: 20px;
+        }
+        #instructions h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <!-- Website Logo -->
     <img id="logo" src="logo.png" alt="Website Logo"> <!-- Replace 'logo.png' with the path to your logo image -->
 
-    <!-- Social Media Buttons -->
-    <div id="socials">
-        <a href="https://telegram.com" target="_blank">
-            <img src="telegram_icon.png" alt="Telegram" class="social-btn"> <!-- Replace 'facebook_icon.png' with the path to your Facebook icon -->
-        </a>
-        <a href="https://x.com/Doge_Crossing" target="_blank">
-            <img src="twitter_icon.png" alt="Twitter" class="social-btn"> <!-- Replace 'twitter_icon.png' with the path to your Twitter icon -->
-        </a>
-        <a href="https://pump.fun" target="_blank">
-            <img src="pumpfun_icon.png" alt="pumpfun" class="social-btn"> <!-- Replace 'instagram_icon.png' with the path to your Instagram icon -->
-        </a>
-    </div>
-
-    <h1 ca: </h1>
-        
     <!-- Game Container -->
     <div id="gameContainer">
         <div id="animal"></div>
@@ -98,6 +101,20 @@
         <div class="lane" style="top: 240px;"><div class="car" style="left: 0;"></div></div>
         <div class="lane" style="top: 160px;"><div class="car" style="left: 320px;"></div></div>
         <div class="lane" style="top: 80px;"><div class="car" style="left: 0;"></div></div>
+    </div>
+
+    <!-- Instruction Box -->
+    <div id="instructions">
+        <h2>Instructions</h2>
+        <p>Welcome to Doge Crossing! Guide the dog across the road without hitting any cars.</p>
+        <ul>
+            <li>Use the <strong>Arrow Keys</strong> to move the dog:</li>
+            <li><strong>Up Arrow</strong> to move up</li>
+            <li><strong>Down Arrow</strong> to move down</li>
+            <li><strong>Left Arrow</strong> to move left</li>
+            <li><strong>Right Arrow</strong> to move right</li>
+        </ul>
+        <p>Avoid the cars and try to reach the top lane safely. Good luck!</p>
     </div>
 
     <script>
