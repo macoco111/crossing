@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Crossing the Road Game (With Images, Logo, and Social Media)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: url('webpage_background.jpg') no-repeat center center/cover; /* Replace with your background image */
+            overflow: hidden;
+        }
+        #logo {
+            margin-top: 20px;
+            width: 150px;
+        }
+        #socials {
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+        }
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            margin: 0 10px;
+        }
+        #gameContainer {
+            position: relative;
+            width: 400px;
+            height: 700px;
+            background: url('road_background.jpg') no-repeat center center/cover; /* Replace with your road background image */
+            overflow: hidden;
+            border: 2px solid #fff;
+            margin-top: 10px;
+        }
+        #animal {
+            position: absolute;
+            bottom: 660px; /* Starting at the empty lane */
+            left: 180px;
+            width: 40px;
+            height: 40px;
+            background: url('animal_image.png') no-repeat center center/contain; /* Replace with your animal image */
+            background-size: contain;
+        }
+        .car {
+            position: absolute;
+            width: 80px;
+            height: 40px;
+            background: url('car_image.png') no-repeat center center/contain; /* Replace with your car image */
+            background-size: contain;
+        }
+        .lane {
+            position: absolute;
+            width: 100%;
+            height: 80px;
+            background-color: transparent;
+            border-bottom: 1px dashed #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Website Logo -->
+    <img id="logo" src="logo.png" alt="Website Logo"> <!-- Replace 'logo.png' with the path to your logo image -->
+
+    <!-- Social Media Buttons -->
+    <div id="socials">
+        <a href="https://facebook.com" target="_blank">
+            <img src="facebook_icon.png" alt="Facebook" class="social-btn"> <!-- Replace 'facebook_icon.png' with the path to your Facebook icon -->
+        </a>
+        <a href="https://twitter.com" target="_blank">
+            <img src="twitter_icon.png" alt="Twitter" class="social-btn"> <!-- Replace 'twitter_icon.png' with the path to your Twitter icon -->
+        </a>
+        <a href="https://instagram.com" target="_blank">
+            <img src="instagram_icon.png" alt="Instagram" class="social-btn"> <!-- Replace 'instagram_icon.png' with the path to your Instagram icon -->
+        </a>
+    </div>
+
+    <!-- Game Container -->
+    <div id="gameContainer">
+        <div id="animal"></div>
+        <!-- Start with an empty lane at the bottom for an easier starting point -->
+        <div class="lane" style="top: 640px;"></div> <!-- Empty starting lane where the animal starts -->
+        <div class="lane" style="top: 560px;"><div class="car" style="left: 0;"></div></div>
+        <div class="lane" style="top: 480px;"><div class="car" style="left: 320px;"></div></div>
+        <div class="lane" style="top: 400px;"><div class="car" style="left: 0;"></div></div>
+        <div class="lane" style="top: 320px;"><div class="car" style="left: 320px;"></div></div>
+        <div class="lane" style="top: 240px;"><div class="car" style="left: 0;"></div></div>
+        <div class="lane" style="top: 160px;"><div class="car" style="left: 320px;"></div></div>
+        <div class="lane" style="top: 80px;"><div class="car" style="left: 0;"></div></div>
+    </div>
+
+    <script>
+        const animal = document.getElementById('animal');
+        const cars = document.querySelectorAll('.car');
+        let animalPosition = { top: 660, left: 180 }; // Starting position in the first empty lane
+
+        document.addEventListener('keydown', (event) => {
+            const step = 20;
+            if (event.key === 'ArrowUp' && animalPosition.top > 0) {
+                animalPosition.top -= step;
+            } else if (event.key === 'ArrowDown' && animalPosition.top < 660) {
+                animalPosition.top += step;
+            } else if (event.key === 'ArrowLeft' && animalPosition.left > 0) {
+                animalPosition.left -= step;
+            } else if (event.key === 'ArrowRight' && animalPosition.left < 360) {
+                animalPosition.left += step;
+            }
+            animal.style.top = animalPosition.top + 'px';
+            animal.style.left = animalPosition.left + 'px';
+            checkCollision();
+        });
+
+        function moveCars() {
+            cars.forEach((car, index) => {
+                let carPosition = parseInt(car.style.left) || 0;
+
+                // Set speed to be slower for lower lanes and faster for upper lanes
+                let totalLanes = cars.length;
+                let carSpeed = 1 + (index * 0.5); // Increase speed more for higher lanes (bottom to top)
+                carSpeed = (index % 2 === 0) ? carSpeed : -carSpeed; // Alternate direction for variety
+                
+                carPosition += carSpeed;
+
+                // Reset car to opposite side if it moves out of bounds
+                if (carPosition > 400) carPosition = -80;
+                if (carPosition < -80) carPosition = 400;
+
+                car.style.left = carPosition + 'px';
+            });
+        }
+
+        setInterval(moveCars, 16); // Move cars every 16ms for smoother animation
+
+        function checkCollision() {
+            cars.forEach(car => {
+                const carRect = car.getBoundingClientRect();
+                const animalRect = animal.getBoundingClientRect();
+                if (!(animalRect.right < carRect.left || animalRect.left > carRect.right || animalRect.bottom < carRect.top || animalRect.top > carRect.bottom)) {
+                    alert("Collision! Game Over.");
+                    animalPosition = { top: 660, left: 180 }; // Reset to starting position
+                    animal.style.top = animalPosition.top + 'px';
+                    animal.style.left = animalPosition.left + 'px';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
